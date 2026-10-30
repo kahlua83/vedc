@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VEDC Caster Signal System</title>
+    <title>VEDC Signal System</title>
     
     <!-- Hệ thống Favicon chuẩn chính chủ VEDC -->
     <link rel="shortcut icon" href="favicon.ico">
@@ -47,7 +47,7 @@
     <div id="setup-view" class="hidden flex-1 flex flex-col justify-center items-center p-4 sm:p-6 text-center bg-slate-950 min-h-screen">
         <div class="bg-slate-900 border-2 border-slate-800 p-6 sm:p-8 rounded-3xl max-w-md w-full shadow-2xl">
             <h1 class="text-2xl sm:text-3xl font-black text-indigo-400 mb-2 flex items-center justify-center gap-2">
-                <span>🎛️ VEDC TALLY</span>
+                <span>🎛️ VEDC SIGNAL</span>
             </h1>
             <p id="setup-step-title" class="text-slate-400 text-xs sm:text-sm mb-6">Bước 1: Chọn vai trò truy cập hệ thống</p>
 
@@ -57,30 +57,33 @@
                     <span>🎛️ ĐẠO DIỄN (DIRECTOR)</span>
                 </button>
                 <button onclick="selectRole('caster')" class="w-full py-4 px-4 bg-teal-600 hover:bg-teal-500 font-black text-base rounded-2xl transition flex items-center justify-center gap-2 shadow-lg">
-                    <span>📺 MÀN HÌNH CASTER (SCREEN)</span>
+                    <span>📺 MÀN HÌNH HIỂN THỊ (SCREEN)</span>
                 </button>
             </div>
 
-            <!-- BƯỚC 2: CHỌN JOB -->
+            <!-- BƯỚC 2: CHỌN JOB & LOẠI HÌNH BÀN (CASTER HAY MC) -->
             <div id="step-job-container" class="space-y-3 mb-6 hidden">
-                <button onclick="selectPresetJob('job1')" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-500 font-bold rounded-xl transition flex items-center justify-between text-sm sm:text-base">
-                    <span>📡 JOB 1 (Sự kiện 1)</span>
-                    <span class="text-xs bg-indigo-900 px-2 py-1 rounded">job1</span>
+                <button onclick="selectPresetJob('job1', 'caster')" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 font-bold rounded-xl transition flex items-center justify-between text-sm sm:text-base">
+                    <span>📡 JOB 1 (Bàn Caster)</span>
+                    <span class="text-xs bg-indigo-900 px-2 py-1 rounded">CASTER</span>
                 </button>
-                <button onclick="selectPresetJob('job2')" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 font-bold rounded-xl transition flex items-center justify-between text-sm sm:text-base">
-                    <span>🎧 JOB 2 (Sự kiện 2)</span>
-                    <span class="text-xs bg-emerald-900 px-2 py-1 rounded">job2</span>
+                <button onclick="selectPresetJob('job2', 'mc')" class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 font-bold rounded-xl transition flex items-center justify-between text-sm sm:text-base">
+                    <span>🎤 JOB 2 (Bàn Stage MC)</span>
+                    <span class="text-xs bg-emerald-900 px-2 py-1 rounded">MC / HOST</span>
                 </button>
-                <button onclick="selectPresetJob('job3')" class="w-full py-3.5 px-4 bg-purple-600 hover:bg-purple-500 font-bold rounded-xl transition flex items-center justify-between text-sm sm:text-base">
-                    <span>🎙️ JOB 3 (Sự kiện 3)</span>
-                    <span class="text-xs bg-purple-900 px-2 py-1 rounded">job3</span>
+                <button onclick="selectPresetJob('job3', 'caster')" class="w-full py-3 px-4 bg-purple-600 hover:bg-purple-500 font-bold rounded-xl transition flex items-center justify-between text-sm sm:text-base">
+                    <span>🎙️ JOB 3 (Bàn Tùy chỉnh)</span>
+                    <span class="text-xs bg-purple-900 px-2 py-1 rounded">CASTER</span>
                 </button>
                 
                 <div class="pt-3 border-t border-slate-800">
                     <label class="block text-xs font-bold text-slate-400 uppercase mb-2 text-left">Hoặc nhập tên Job tùy chỉnh (vd: vmc):</label>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 mb-2">
                         <input type="text" id="custom-job-input" placeholder="Nhập tên job..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500">
-                        <button id="btn-custom-job" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap">VÀO</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="submitCustomJob('caster')" class="flex-1 bg-indigo-600 hover:bg-indigo-500 py-2 rounded-xl text-xs font-bold transition">VÀO (BẢN CASTER)</button>
+                        <button onclick="submitCustomJob('mc')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 py-2 rounded-xl text-xs font-bold transition">VÀO (BẢN MC)</button>
                     </div>
                 </div>
 
@@ -91,13 +94,13 @@
                 </div>
             </div>
 
-            <!-- BƯỚC 3: CHỌN BÀN CASTER -->
+            <!-- BƯỚC 3: CHỌN BÀN GỐC -->
             <div id="step-caster-desk-container" class="space-y-3 mb-6 hidden">
                 <button onclick="selectCasterDesk('caster_1')" class="w-full py-4 px-4 bg-indigo-600 hover:bg-indigo-500 font-black text-base sm:text-lg rounded-2xl transition flex items-center justify-center gap-2">
-                    🎙️ BÀN 1 (MAIN CASTER)
+                    🎙️ BÀN 1 (MAIN DESK)
                 </button>
                 <button onclick="selectCasterDesk('caster_2')" class="w-full py-4 px-4 bg-teal-600 hover:bg-teal-500 font-black text-base sm:text-lg rounded-2xl transition flex items-center justify-center gap-2">
-                    🎧 BÀN 2 (ANALYST DESK)
+                    🎧 BÀN 2 (SUB DESK)
                 </button>
                 <button onclick="backToJobStep()" class="text-xs font-bold text-slate-400 hover:text-white pt-2 underline">
                     ⬅️ Chọn lại Job khác
@@ -106,7 +109,7 @@
         </div>
     </div>
 
-    <!-- ==================== MÀN HÌNH HIỂN THỊ CASTER (SCREEN) ==================== -->
+    <!-- ==================== MÀN HÌNH HIỂN THỊ (SCREEN) ==================== -->
     <div id="caster-view" class="hidden flex-1 flex flex-col justify-center items-center p-3 sm:p-6 text-center relative h-full w-full overflow-hidden">
         
         <button id="btn-caster-reset" class="absolute top-3 right-3 sm:top-4 sm:right-4 bg-black/50 hover:bg-black/80 border border-white/20 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-200 transition z-10 shadow">
@@ -132,7 +135,7 @@
         <div id="custom-msg" class="responsive-msg font-extrabold max-w-5xl w-full text-amber-300 bg-black/80 border-2 sm:border-4 border-amber-400 px-4 sm:px-6 py-3 sm:py-5 rounded-2xl shadow-2xl hidden animate-pulse-fast break-words">
         </div>
 
-        <!-- Nhãn định danh thương hiệu và Wake Lock ở chân trang Caster -->
+        <!-- Nhãn định danh thương hiệu và Wake Lock ở chân trang -->
         <div class="absolute bottom-2 sm:bottom-3 flex flex-col items-center gap-0.5 opacity-70 pointer-events-none">
             <div class="text-[10px] sm:text-xs font-bold text-slate-300 tracking-wider uppercase">VEDC Broadcast Production System</div>
             <div id="wake-lock-status" class="text-[9px] sm:text-[10px] font-semibold text-slate-400">💡 Screen Wake Lock: Off</div>
@@ -143,7 +146,7 @@
     <div id="director-view" class="hidden flex-1 p-4 sm:p-6 overflow-y-auto max-w-7xl mx-auto w-full">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 pb-4 border-b border-slate-800">
             <h1 class="text-2xl sm:text-3xl font-black text-indigo-400 flex items-center gap-2">
-                <span>🎛️ BẢNG ĐIỀU KHIỂN TALLY CASTER (VEDC)</span>
+                <span>🎛️ BẢNG ĐIỀU KHIỂN TALLY (VEDC)</span>
             </h1>
             <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
                 <span id="job-badge" class="bg-amber-950 text-amber-300 border border-amber-700/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
@@ -160,8 +163,8 @@
             <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-4 gap-2 flex-wrap">
-                        <h2 class="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-2">
-                            <span>🎙️ BÀN 1</span> <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">MAIN</span>
+                        <h2 id="title-desk-1" class="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-2">
+                            <span>🎙️ BÀN 1</span> <span id="type-badge-1" class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">CASTER</span>
                         </h2>
                         
                         <div class="flex items-center gap-2">
@@ -175,43 +178,9 @@
                         </div>
                     </div>
 
-                    <!-- 8 Nút bấm chuẩn lưới 2x4 -->
-                    <div class="grid grid-cols-2 gap-2.5 mb-4">
-                        <button id="btn-c1-onair" class="p-3 sm:p-3.5 rounded-2xl bg-red-700 hover:bg-red-600 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>📡 STREAM ON AIR</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">LUỒNG SÓNG ĐANG PHÁT</span>
-                        </button>
-                        <button id="btn-c1-standby" class="p-3 sm:p-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🟢 PREVIEW</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">STANDBY / CHUẨN BỊ</span>
-                        </button>
-
-                        <button id="btn-c1-cam-off" class="p-3 sm:p-3.5 rounded-2xl bg-black hover:bg-slate-900 border-2 border-red-500 text-white font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🎙️ CASTER XUỐNG HÌNH</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">OFF CAM (VẪN BÌNH LUẬN)</span>
-                        </button>
-                        <button id="btn-c1-cam-on" class="p-3 sm:p-3.5 rounded-2xl bg-red-600 hover:bg-red-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🎥 CASTER LÊN HÌNH</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">ON CAMERA</span>
-                        </button>
-
-                        <button id="btn-c1-caugio" class="p-3 sm:p-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🟡 CÂU GIỜ</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">HOLD TIME</span>
-                        </button>
-                        <button id="btn-c1-mc" class="p-3 sm:p-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🎙️ CHUYỂN VỀ MC</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">BACK TO HOST / MC</span>
-                        </button>
-
-                        <button id="btn-c1-out" class="p-3 sm:p-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🔵 CASTER OUT</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">BÌNH LUẬN XONG</span>
-                        </button>
-                        <button id="btn-c1-break" class="p-3 sm:p-3.5 rounded-2xl bg-purple-600 hover:bg-purple-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🟣 BREAK</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">NGHỈ GIẢI LAO</span>
-                        </button>
+                    <!-- 8 Nút bấm bàn 1 (Sẽ được render động theo loại Caster hay MC) -->
+                    <div id="grid-desk-1" class="grid grid-cols-2 gap-2.5 mb-4">
+                        <!-- Render qua Javascript -->
                     </div>
                 </div>
 
@@ -229,8 +198,8 @@
             <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-4 gap-2 flex-wrap">
-                        <h2 class="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-2">
-                            <span>🎧 BÀN 2</span> <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">ANALYST</span>
+                        <h2 id="title-desk-2" class="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-2">
+                            <span>🎧 BÀN 2</span> <span id="type-badge-2" class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">ANALYST</span>
                         </h2>
                         
                         <div class="flex items-center gap-2">
@@ -244,43 +213,9 @@
                         </div>
                     </div>
 
-                    <!-- 8 Nút bấm chuẩn lưới 2x4 -->
-                    <div class="grid grid-cols-2 gap-2.5 mb-4">
-                        <button id="btn-c2-onair" class="p-3 sm:p-3.5 rounded-2xl bg-red-700 hover:bg-red-600 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>📡 STREAM ON AIR</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">LUỒNG SÓNG ĐANG PHÁT</span>
-                        </button>
-                        <button id="btn-c2-standby" class="p-3 sm:p-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🟢 PREVIEW</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">STANDBY / CHUẨN BỊ</span>
-                        </button>
-
-                        <button id="btn-c2-cam-off" class="p-3 sm:p-3.5 rounded-2xl bg-black hover:bg-slate-900 border-2 border-red-500 text-white font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🎙️ CASTER XUỐNG HÌNH</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">OFF CAM (VẪN BÌNH LUẬN)</span>
-                        </button>
-                        <button id="btn-c2-cam-on" class="p-3 sm:p-3.5 rounded-2xl bg-red-600 hover:bg-red-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🎥 CASTER LÊN HÌNH</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">ON CAMERA</span>
-                        </button>
-
-                        <button id="btn-c2-caugio" class="p-3 sm:p-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🟡 CÂU GIỜ</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">HOLD TIME</span>
-                        </button>
-                        <button id="btn-c2-mc" class="p-3 sm:p-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🎙️ CHUYỂN VỀ MC</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">BACK TO HOST / MC</span>
-                        </button>
-
-                        <button id="btn-c2-out" class="p-3 sm:p-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🔵 CASTER OUT</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">BÌNH LUẬN XONG</span>
-                        </button>
-                        <button id="btn-c2-break" class="p-3 sm:p-3.5 rounded-2xl bg-purple-600 hover:bg-purple-500 font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col">
-                            <span>🟣 BREAK</span>
-                            <span class="text-[10px] sm:text-xs font-normal opacity-80">NGHỈ GIẢI LAO</span>
-                        </button>
+                    <!-- 8 Nút bấm bàn 2 (Sẽ được render động theo loại Caster hay MC) -->
+                    <div id="grid-desk-2" class="grid grid-cols-2 gap-2.5 mb-4">
+                        <!-- Render qua Javascript -->
                     </div>
                 </div>
 
@@ -296,7 +231,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT TÍCH HỢP SUPABASE -->
+    <!-- SCRIPT TÍCH HỢP SUPABASE & ĐỊNH NGHĨA BUTTON SETS -->
     <script type="module">
         const SUPABASE_URL = 'https://omwirirvygtlmvcjrlik.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_zfhPOosE4n_efrG_egojpg_WY7ryv7R';
@@ -307,6 +242,7 @@
         let role = urlParams.get('role');
         let casterId = urlParams.get('id');
         let jobId = urlParams.get('job');
+        let mode = urlParams.get('mode') || 'caster'; // 'caster' hoặc 'mc'
 
         function cleanJobId(id) {
             if (!id) return '';
@@ -314,6 +250,29 @@
         }
 
         if (jobId) jobId = cleanJobId(jobId);
+
+        // Định nghĩa 2 bộ nút bấm chuẩn cho Caster và MC
+        const CASTER_BUTTONS = [
+            { id: 'onair', titleEng: 'STREAM ON AIR', titleVie: 'LUỒNG SÓNG ĐANG PHÁT', bg: '#b91c1c', text: '#ffffff', desc: 'ĐANG PHÁT SÓNG' },
+            { id: 'standby', titleEng: 'PREVIEW', titleVie: 'STANDBY / CHUẨN BỊ', bg: '#059669', text: '#ffffff', desc: 'CHUẨN BỊ' },
+            { id: 'cam-off', titleEng: 'CASTER XUỐNG HÌNH', titleVie: 'OFF CAM (VẪN BÌNH LUẬN)', bg: '#000000', text: '#ffffff', desc: 'OFF CAM' },
+            { id: 'cam-on', titleEng: 'CASTER LÊN HÌNH', titleVie: 'ON CAMERA', bg: '#dc2626', text: '#ffffff', desc: 'ON CAMERA' },
+            { id: 'caugio', titleEng: 'CÂU GIỜ', titleVie: 'HOLD TIME', bg: '#f59e0b', text: '#030712', desc: 'HOLD TIME' },
+            { id: 'mc', titleEng: 'CHUYỂN VỀ MC', titleVie: 'BACK TO HOST / MC', bg: '#0d9488', text: '#ffffff', desc: 'VỀ MC' },
+            { id: 'out', titleEng: 'CASTER OUT', titleVie: 'BÌNH LUẬN XONG', bg: '#2563eb', text: '#ffffff', desc: 'XONG' },
+            { id: 'break', titleEng: 'BREAK', titleVie: 'NGHỈ GIẢI LAO', bg: '#9333ea', text: '#ffffff', desc: 'NGHỈ' }
+        ];
+
+        const MC_BUTTONS = [
+            { id: 'voice-off', titleEng: 'VOICE OFF', titleVie: 'TẮT TIẾNG / OFF VOICE', bg: '#334155', text: '#ffffff', desc: 'OFF VOICE' },
+            { id: 'caugio-mc', titleEng: 'CÂU GIỜ', titleVie: 'HOLD TIME', bg: '#f59e0b', text: '#030712', desc: 'HOLD TIME' },
+            { id: 'tra-caster', titleEng: 'TRẢ VỀ CASTER', titleVie: 'BACK TO CASTER', bg: '#2563eb', text: '#ffffff', desc: 'VỀ CASTER' },
+            { id: 'mg-hoi', titleEng: 'MINIGAME CÂU HỎI', titleVie: 'QUESTION MINIGAME', bg: '#9333ea', text: '#ffffff', desc: 'MINIGAME HỎI' },
+            { id: 'mg-lucky', titleEng: 'MINIGAME LUCKY DRAW', titleVie: 'LUCKY DRAW', bg: '#ea580c', text: '#ffffff', desc: 'LUCKY DRAW' },
+            { id: 'mg-end', titleEng: 'KẾT THÚC MINIGAME', titleVie: 'END MINIGAME', bg: '#64748b', text: '#ffffff', desc: 'XONG MG' },
+            { id: 'giao-luu', titleEng: 'GIAO LƯU KHÁN GIẢ', titleVie: 'AUDIENCE INTERACTION', bg: '#0d9488', text: '#ffffff', desc: 'GIAO LƯU' },
+            { id: 'giao-luu-end', titleEng: 'KẾT THÚC GIAO LƯU', titleVie: 'END INTERACTION', bg: '#475569', text: '#ffffff', desc: 'XONG GIAO LƯU' }
+        ];
 
         const setupView = document.getElementById('setup-view');
         const stepRoleContainer = document.getElementById('step-role-container');
@@ -332,13 +291,13 @@
             stepRoleContainer.classList.add('hidden');
             stepJobContainer.classList.remove('hidden');
             stepCasterDeskContainer.classList.add('hidden');
-            setupStepTitle.innerText = `Bước 2: Chọn Job cho (${role === 'director' ? 'Đạo diễn' : 'Màn hình Caster'})`;
+            setupStepTitle.innerText = `Bước 2: Chọn Job & Loại hình bàn`;
         } else if (role === 'caster' && !casterId) {
             setupView.classList.remove('hidden');
             stepRoleContainer.classList.add('hidden');
             stepJobContainer.classList.add('hidden');
             stepCasterDeskContainer.classList.remove('hidden');
-            setupStepTitle.innerText = `Bước 3: Chọn Bàn (Job: ${jobId})`;
+            setupStepTitle.innerText = `Bước 3: Chọn Bàn (Job: ${jobId} - ${mode.toUpperCase()})`;
         } else {
             startApp();
         }
@@ -348,14 +307,19 @@
             window.location.search = urlParams.toString();
         };
 
-        window.selectPresetJob = function(jobName) {
+        window.selectPresetJob = function(jobName, jobMode) {
             urlParams.set('job', cleanJobId(jobName));
+            urlParams.set('mode', jobMode);
             window.location.search = urlParams.toString();
         };
 
-        document.getElementById('btn-custom-job').onclick = () => {
+        window.submitCustomJob = function(jobMode) {
             const val = document.getElementById('custom-job-input').value.trim();
-            if (val) window.selectPresetJob(val);
+            if (val) {
+                window.selectPresetJob(val, jobMode);
+            } else {
+                alert("Vui lòng nhập tên Job!");
+            }
         };
 
         window.selectCasterDesk = function(selectedDeskId) {
@@ -370,6 +334,7 @@
 
         window.backToJobStep = function() {
             urlParams.delete('job');
+            urlParams.delete('mode');
             window.location.search = urlParams.toString();
         };
 
@@ -385,23 +350,48 @@
 
             if (role === 'director') {
                 document.getElementById('director-view').classList.remove('hidden');
-                document.getElementById('job-badge').innerText = '🏷️ Job: ' + jobId;
+                document.getElementById('job-badge').innerText = `🏷️ Job: ${jobId} (${mode.toUpperCase()})`;
+                renderDirectorButtons('caster_1', 'grid-desk-1', mode);
+                renderDirectorButtons('caster_2', 'grid-desk-2', mode);
                 initDirectorPanel();
             } else {
                 document.getElementById('caster-view').classList.remove('hidden');
                 
                 const deskBadge = document.getElementById('caster-desk-badge');
                 if (casterId === 'caster_1') {
-                    deskBadge.innerText = `🎙️ ${jobId.toUpperCase()} - BÀN 1 (MAIN CASTER)`;
-                } else if (casterId === 'caster_2') {
-                    deskBadge.innerText = `🎧 ${jobId.toUpperCase()} - BÀN 2 (ANALYST DESK)`;
+                    deskBadge.innerText = `🎙️ ${jobId.toUpperCase()} (${mode.toUpperCase()}) - BÀN 1`;
                 } else {
-                    deskBadge.innerText = `📡 ${jobId.toUpperCase()} - ${casterId}`;
+                    deskBadge.innerText = `🎧 ${jobId.toUpperCase()} (${mode.toUpperCase()}) - BÀN 2`;
                 }
 
                 initCasterTablet(casterId);
                 requestWakeLock();
             }
+        }
+
+        function renderDirectorButtons(targetId, containerId, currentMode) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const buttons = currentMode === 'mc' ? MC_BUTTONS : CASTER_BUTTONS;
+
+            buttons.forEach(btn => {
+                const buttonEl = document.createElement('button');
+                buttonEl.id = `btn-${targetId}-${btn.id}`;
+                buttonEl.className = `p-3 sm:p-3.5 rounded-2xl font-black text-sm sm:text-base shadow-lg transition active:scale-95 text-left flex flex-col`;
+                buttonEl.style.backgroundColor = btn.bg;
+                buttonEl.style.color = btn.text;
+                if(btn.bg === '#000000') buttonEl.className += ' border-2 border-red-500';
+
+                buttonEl.innerHTML = `
+                    <span>${btn.titleEng}</span>
+                    <span class="text-[10px] sm:text-xs font-normal opacity-80">${btn.titleVie}</span>
+                `;
+
+                const secInputId = targetId === 'caster_1' ? 'input-c1-sec' : 'input-c2-sec';
+                buttonEl.onclick = () => sendSignal(targetId, btn.titleEng, btn.titleVie, btn.bg, btn.text, secInputId);
+
+                container.appendChild(buttonEl);
+            });
         }
 
         async function pushSignalToDB(targetId, signalData) {
@@ -430,27 +420,8 @@
                 })
                 .subscribe();
 
-            // Bàn 1
-            document.getElementById('btn-c1-onair').onclick = () => sendSignal('caster_1', 'STREAM ON AIR', 'LUỒNG SÓNG ĐANG PHÁT', '#b91c1c', '#ffffff', 'input-c1-sec');
-            document.getElementById('btn-c1-cam-on').onclick = () => sendSignal('caster_1', 'CASTER LÊN HÌNH', 'ON CAMERA', '#dc2626', '#ffffff', 'input-c1-sec');
-            document.getElementById('btn-c1-cam-off').onclick = () => sendSignal('caster_1', 'CASTER XUỐNG HÌNH', 'OFF CAM (VẪN BÌNH LUẬN)', '#000000', '#ffffff', 'input-c1-sec');
-            document.getElementById('btn-c1-standby').onclick = () => sendSignal('caster_1', 'PREVIEW', 'STANDBY / CHUẨN BỊ', '#059669', '#ffffff', 'input-c1-sec');
-            document.getElementById('btn-c1-caugio').onclick = () => sendSignal('caster_1', 'CÂU GIỜ', 'HOLD TIME', '#f59e0b', '#030712', 'input-c1-sec');
-            document.getElementById('btn-c1-mc').onclick = () => sendSignal('caster_1', 'CHUYỂN VỀ MC', 'BACK TO HOST / MC', '#0d9488', '#ffffff', 'input-c1-sec');
-            document.getElementById('btn-c1-out').onclick = () => sendSignal('caster_1', 'CASTER OUT', 'BÌNH LUẬN XONG', '#2563eb', '#ffffff', 'input-c1-sec');
-            document.getElementById('btn-c1-break').onclick = () => sendSignal('caster_1', 'BREAK', 'NGHỈ GIẢI LAO', '#9333ea', '#ffffff', 'input-c1-sec');
             document.getElementById('btn-c1-sendmsg').onclick = () => sendQuickMsg('caster_1', 'input-c1-msg');
             document.getElementById('btn-c1-clearmsg').onclick = () => clearQuickMsg('caster_1');
-
-            // Bàn 2
-            document.getElementById('btn-c2-onair').onclick = () => sendSignal('caster_2', 'STREAM ON AIR', 'LUỒNG SÓNG ĐANG PHÁT', '#b91c1c', '#ffffff', 'input-c2-sec');
-            document.getElementById('btn-c2-cam-on').onclick = () => sendSignal('caster_2', 'CASTER LÊN HÌNH', 'ON CAMERA', '#dc2626', '#ffffff', 'input-c2-sec');
-            document.getElementById('btn-c2-cam-off').onclick = () => sendSignal('caster_2', 'CASTER XUỐNG HÌNH', 'OFF CAM (VẪN BÌNH LUẬN)', '#000000', '#ffffff', 'input-c2-sec');
-            document.getElementById('btn-c2-standby').onclick = () => sendSignal('caster_2', 'PREVIEW', 'STANDBY / CHUẨN BỊ', '#059669', '#ffffff', 'input-c2-sec');
-            document.getElementById('btn-c2-caugio').onclick = () => sendSignal('caster_2', 'CÂU GIỜ', 'HOLD TIME', '#f59e0b', '#030712', 'input-c2-sec');
-            document.getElementById('btn-c2-mc').onclick = () => sendSignal('caster_2', 'CHUYỂN VỀ MC', 'BACK TO HOST / MC', '#0d9488', '#ffffff', 'input-c2-sec');
-            document.getElementById('btn-c2-out').onclick = () => sendSignal('caster_2', 'CASTER OUT', 'BÌNH LUẬN XONG', '#2563eb', '#ffffff', 'input-c2-sec');
-            document.getElementById('btn-c2-break').onclick = () => sendSignal('caster_2', 'BREAK', 'NGHỈ GIẢI LAO', '#9333ea', '#ffffff', 'input-c2-sec');
             document.getElementById('btn-c2-sendmsg').onclick = () => sendQuickMsg('caster_2', 'input-c2-msg');
             document.getElementById('btn-c2-clearmsg').onclick = () => clearQuickMsg('caster_2');
         }
@@ -459,7 +430,6 @@
             const countdownSec = parseInt(document.getElementById(secInputId).value) || 0;
             const rowId = `${jobId}_${targetId}`;
             
-            // Giữ nguyên lời nhắc cũ đang có trên DB nếu có
             const { data } = await supabaseClient.from('tally_signals').select('payload').eq('id', rowId).single();
             const existingMsg = (data && data.payload && data.payload.message) ? data.payload.message : '';
 
