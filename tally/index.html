@@ -23,7 +23,7 @@
 </head>
 <body id="main-body" class="bg-slate-950 text-white h-screen w-screen flex flex-col justify-between overflow-x-hidden font-sans select-none" style="background-color: #020617; transition: background-color 0.2s ease;">
 
-    <!-- SETUP VIEW (BƯỚC CHỌN VAI TRÒ BAN ĐẦU) -->
+    <!-- SETUP VIEW -->
     <div id="setup-view" class="hidden flex-1 flex flex-col justify-center items-center p-4 sm:p-6 text-center bg-slate-950 min-h-screen">
         <div class="bg-slate-900 border-2 border-slate-800 p-6 sm:p-8 rounded-3xl max-w-md w-full shadow-2xl">
             <h1 class="text-2xl sm:text-3xl font-black text-red-500 mb-2 flex items-center justify-center gap-2">
@@ -98,8 +98,8 @@
             </button>
         </div>
 
-        <div class="flex flex-col items-center justify-center my-2 transition-all">
-            <div id="caster-countdown-banner" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/80 px-4 py-1.5 rounded-xl mb-2 tracking-wider uppercase border border-amber-400/60 hidden animate-pulse-fast shadow-xl">
+        <div class="flex flex-col items-center justify-center my-1 transition-all">
+            <div id="caster-countdown-banner" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/80 px-4 py-1.5 rounded-xl mb-1 tracking-wider uppercase border border-amber-400/60 hidden animate-pulse-fast shadow-xl">
                 ⏱️ ĐẾM NGƯỢC: <span id="caster-timer-num">5</span>s
             </div>
 
@@ -111,18 +111,18 @@
             </div>
         </div>
 
+        <!-- LỜI NHẮC KHẨN CẤP RIÊNG BIỆT (KHÔNG ẢNH HƯỞNG SCRIPT) -->
         <div id="custom-msg" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/90 border-2 border-amber-400 px-4 py-2 rounded-xl shadow-xl hidden animate-pulse-fast text-center mx-auto my-1 max-w-3xl w-full">
         </div>
 
+        <!-- KHUNG MC SCRIPT CỐ ĐỊNH, CHỮ TO RÕ, ĐỘC LẬP -->
         <div class="flex-1 bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-4 sm:p-6 flex flex-col shadow-2xl overflow-y-auto my-2">
             <div class="flex justify-between items-center mb-2 pb-2 border-b border-slate-800">
-                <span class="text-xs font-extrabold text-amber-400 uppercase tracking-widest">📝 MC SCRIPT / GHI CHÚ HIỆN TRƯỜNG</span>
+                <span class="text-xs font-extrabold text-amber-400 uppercase tracking-widest">📝 MC SCRIPT / KỊCH BẢN ĐIỀU HÀNH</span>
                 <span class="text-[11px] text-slate-400 font-medium">VEDC Live Teleprompter</span>
             </div>
-            <div id="mc-script-content" class="flex-1 text-slate-200 text-lg sm:text-2xl font-semibold leading-relaxed space-y-3">
-                <p class="opacity-80 italic">Chờ đạo diễn gửi nội dung kịch bản hoặc hướng dẫn trực tiếp lên màn hình...</p>
-                <p>🔹 <strong>Phần mở đầu:</strong> Giới thiệu nhà tài trợ, ổn định khán giả trường quay.</p>
-                <p>🔹 <strong>Minigame:</strong> Đọc câu hỏi tương tác, gọi tên khán giả giơ tay nhanh nhất.</p>
+            <div id="mc-script-content" class="flex-1 text-slate-200 text-lg sm:text-2xl font-semibold leading-relaxed whitespace-pre-wrap">
+                Chờ đạo diễn gửi kịch bản lên hệ thống...
             </div>
         </div>
 
@@ -174,12 +174,27 @@
                     <div id="grid-desk-1" class="grid grid-cols-2 gap-2.5 mb-4"></div>
                 </div>
 
-                <div class="bg-slate-950/60 p-3.5 sm:p-4 rounded-2xl border border-slate-800">
-                    <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Lời nhắc / Kịch bản Script (Bàn 1):</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="input-c1-msg" placeholder="Nhập lời nhắc hoặc script cho MC..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
-                        <button id="btn-c1-sendmsg" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition whitespace-nowrap">GỬI</button>
-                        <button id="btn-c1-clearmsg" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 transition whitespace-nowrap">XÓA</button>
+                <div class="space-y-3">
+                    <!-- Ô 1: Gửi Lời nhắc khẩn cấp -->
+                    <div class="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800">
+                        <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Lời nhắc khẩn cấp (Alert):</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-c1-msg" placeholder="Gõ chú ý nhanh cho MC..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                            <button id="btn-c1-sendmsg" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition whitespace-nowrap">GỬI</button>
+                            <button id="btn-c1-clearmsg" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 transition whitespace-nowrap">XÓA</button>
+                        </div>
+                    </div>
+
+                    <!-- Ô 2: Dán Script / Kịch bản dài -->
+                    <div class="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800">
+                        <label class="block text-xs font-bold uppercase mb-2 text-teal-400">📝 Dán MC Script / Kịch bản:</label>
+                        <div class="flex flex-col gap-2">
+                            <textarea id="input-c1-script" rows="3" placeholder="Dán toàn bộ kịch bản, lời dẫn tại đây..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-teal-500 resize-y"></textarea>
+                            <div class="flex gap-2 justify-end">
+                                <button id="btn-c1-sendscript" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded-xl text-xs font-black transition">CẬP NHẬT SCRIPT</button>
+                                <button id="btn-c1-clearscript" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 transition">XÓA</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -204,12 +219,27 @@
                     <div id="grid-desk-2" class="grid grid-cols-2 gap-2.5 mb-4"></div>
                 </div>
 
-                <div class="bg-slate-950/60 p-3.5 sm:p-4 rounded-2xl border border-slate-800">
-                    <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Lời nhắc / Kịch bản Script (Bàn 2):</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="input-c2-msg" placeholder="Nhập lời nhắc hoặc script cho MC..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
-                        <button id="btn-c2-sendmsg" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition whitespace-nowrap">GỬI</button>
-                        <button id="btn-c2-clearmsg" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 transition whitespace-nowrap">XÓA</button>
+                <div class="space-y-3">
+                    <!-- Ô 1: Gửi Lời nhắc khẩn cấp -->
+                    <div class="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800">
+                        <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Lời nhắc khẩn cấp (Alert):</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-c2-msg" placeholder="Gõ chú ý nhanh cho MC..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                            <button id="btn-c2-sendmsg" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition whitespace-nowrap">GỬI</button>
+                            <button id="btn-c2-clearmsg" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 transition whitespace-nowrap">XÓA</button>
+                        </div>
+                    </div>
+
+                    <!-- Ô 2: Dán Script / Kịch bản dài -->
+                    <div class="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800">
+                        <label class="block text-xs font-bold uppercase mb-2 text-teal-400">📝 Dán MC Script / Kịch bản:</label>
+                        <div class="flex flex-col gap-2">
+                            <textarea id="input-c2-script" rows="3" placeholder="Dán toàn bộ kịch bản, lời dẫn tại đây..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-teal-500 resize-y"></textarea>
+                            <div class="flex gap-2 justify-end">
+                                <button id="btn-c2-sendscript" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded-xl text-xs font-black transition">CẬP NHẬT SCRIPT</button>
+                                <button id="btn-c2-clearscript" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 transition">XÓA</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -394,39 +424,55 @@
                 })
                 .subscribe();
 
-            document.getElementById('btn-c1-sendmsg').onclick = () => sendQuickMsg('caster_1', 'input-c1-msg');
-            document.getElementById('btn-c1-clearmsg').onclick = () => clearQuickMsg('caster_1');
-            document.getElementById('btn-c2-sendmsg').onclick = () => sendQuickMsg('caster_2', 'input-c2-msg');
-            document.getElementById('btn-c2-clearmsg').onclick = () => clearQuickMsg('caster_2');
+            // Gắn sự kiện cho Bàn 1
+            document.getElementById('btn-c1-sendmsg').onclick = () => sendQuickMsg('caster_1', 'input-c1-msg', 'message');
+            document.getElementById('btn-c1-clearmsg').onclick = () => clearField('caster_1', 'message');
+            document.getElementById('btn-c1-sendscript').onclick = () => sendQuickMsg('caster_1', 'input-c1-script', 'script');
+            document.getElementById('btn-c1-clearscript').onclick = () => clearField('caster_1', 'script');
+
+            // Gắn sự kiện cho Bàn 2
+            document.getElementById('btn-c2-sendmsg').onclick = () => sendQuickMsg('caster_2', 'input-c2-msg', 'message');
+            document.getElementById('btn-c2-clearmsg').onclick = () => clearField('caster_2', 'message');
+            document.getElementById('btn-c2-sendscript').onclick = () => sendQuickMsg('caster_2', 'input-c2-script', 'script');
+            document.getElementById('btn-c2-clearscript').onclick = () => clearField('caster_2', 'script');
         }
 
         async function sendSignal(targetId, titleEng, titleVie, bgColor, textColor, secInputId) {
             const countdownSec = parseInt(document.getElementById(secInputId).value) || 0;
             const rowId = `${jobId}_${targetId}`;
             const { data } = await supabaseClient.from('tally_signals').select('payload').eq('id', rowId).single();
-            const existingMsg = (data && data.payload && data.payload.message) ? data.payload.message : '';
-            await pushSignalToDB(targetId, { titleEng, titleVie, bgColor, textColor, message: existingMsg, countdownSec, triggerTime: Date.now() });
+            const existingPayload = data && data.payload ? data.payload : {};
+            
+            await pushSignalToDB(targetId, {
+                ...existingPayload,
+                titleEng, titleVie, bgColor, textColor,
+                countdownSec,
+                triggerTime: Date.now()
+            });
         }
 
-        async function sendQuickMsg(targetId, inputId) {
+        async function sendQuickMsg(targetId, inputId, fieldKey) {
             const input = document.getElementById(inputId);
-            const msg = input.value.trim();
-            if(!msg) return;
+            const val = input.value.trim();
+            if(!val) return;
+
             const rowId = `${jobId}_${targetId}`;
             const { data } = await supabaseClient.from('tally_signals').select('payload').eq('id', rowId).single();
-            const currentPayload = data ? data.payload : { titleEng: 'STANDBY', titleVie: 'SẴN SÀNG', bgColor: '#059669', textColor: '#ffffff' };
-            currentPayload.message = msg;
+            const currentPayload = data && data.payload ? data.payload : { titleEng: 'STANDBY', titleVie: 'SẴN SÀNG', bgColor: '#059669', textColor: '#ffffff' };
+            
+            currentPayload[fieldKey] = val;
             currentPayload.triggerTime = Date.now();
+
             await pushSignalToDB(targetId, currentPayload);
-            input.value = '';
+            if (fieldKey === 'message') input.value = '';
         }
 
-        async function clearQuickMsg(targetId) {
+        async function clearField(targetId, fieldKey) {
             const rowId = `${jobId}_${targetId}`;
             const { data } = await supabaseClient.from('tally_signals').select('payload').eq('id', rowId).single();
             if (data && data.payload) {
                 const currentPayload = data.payload;
-                currentPayload.message = '';
+                currentPayload[fieldKey] = '';
                 currentPayload.triggerTime = Date.now();
                 await pushSignalToDB(targetId, currentPayload);
             }
@@ -463,13 +509,22 @@
                     statusSubtext.innerText = data.titleVie || 'SẴN SÀNG';
                 }
 
+                // Xử lý Lời nhắc khẩn cấp (Alert) riêng biệt phía trên
                 if (data.message !== undefined) {
                     if (data.message && data.message.trim() !== '') {
                         customMsg.innerText = `⚠️ CHÚ Ý: ${data.message}`;
                         customMsg.classList.remove('hidden');
-                        mcScriptContent.innerHTML = `<div class="p-3 bg-amber-500/20 border-l-4 border-amber-400 text-amber-200 font-bold rounded">${data.message}</div>` + mcScriptContent.innerHTML;
                     } else {
                         customMsg.classList.add('hidden');
+                    }
+                }
+
+                // Xử lý MC Script độc lập cố định ở nửa dưới
+                if (data.script !== undefined) {
+                    if (data.script && data.script.trim() !== '') {
+                        mcScriptContent.innerText = data.script;
+                    } else {
+                        mcScriptContent.innerHTML = '<span class="opacity-60 italic">Chờ đạo diễn cập nhật kịch bản...</span>';
                     }
                 }
 
