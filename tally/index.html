@@ -19,22 +19,6 @@
             50% { opacity: 0.3; }
         }
         .animate-pulse-fast { animation: pulse-fast 0.8s infinite; }
-
-        .responsive-title {
-            font-size: clamp(2rem, 6vw, 5rem);
-            line-height: 1.1;
-        }
-        .responsive-subtext {
-            font-size: clamp(1rem, 3vw, 2rem);
-            line-height: 1.2;
-        }
-        .responsive-msg {
-            font-size: clamp(1.1rem, 3.5vw, 2.5rem);
-            line-height: 1.3;
-        }
-        .responsive-countdown {
-            font-size: clamp(1.1rem, 3.5vw, 2rem);
-        }
     </style>
 </head>
 <body id="main-body" class="bg-slate-950 text-white h-screen w-screen flex flex-col justify-between overflow-x-hidden font-sans select-none" style="background-color: #020617; transition: background-color 0.2s ease;">
@@ -102,34 +86,54 @@
         </div>
     </div>
 
-    <!-- CASTER VIEW -->
-    <div id="caster-view" class="hidden flex-1 flex flex-col justify-center items-center p-3 sm:p-6 text-center relative h-full w-full overflow-hidden">
-        <button id="btn-caster-reset" class="absolute top-3 right-3 sm:top-4 sm:right-4 bg-black/50 hover:bg-black/80 border border-white/20 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-slate-200 transition z-10 shadow">
-            🔄 Đổi Cài Đặt
-        </button>
-
-        <div id="caster-desk-badge" class="bg-black/60 border border-white/20 px-4 py-1.5 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider text-amber-300 mb-3 shadow-lg">
-            Đang kết nối...
-        </div>
-
-        <div id="caster-countdown-banner" class="responsive-countdown font-extrabold text-amber-300 bg-black/70 px-6 sm:px-10 py-2 sm:py-3 rounded-2xl mb-3 sm:mb-6 tracking-wider uppercase border-2 border-amber-400/60 hidden animate-pulse-fast shadow-2xl max-w-full">
-            ⏱️ ĐẾM NGƯỢC: <span id="caster-timer-num">5</span>s
-        </div>
-
-        <div id="status-badge" class="responsive-title font-black uppercase tracking-wider mb-2 sm:mb-4 px-6 sm:px-10 py-3 sm:py-6 rounded-2xl sm:rounded-3xl bg-black/40 shadow-2xl border-2 sm:border-4 border-white/20 max-w-full break-words">
-            CONNECTING...
-        </div>
+    <!-- CASTER / MC SCREEN VIEW (SPLIT LAYOUT CHO IPAD DỌC) -->
+    <div id="caster-view" class="hidden flex-1 flex flex-col justify-between p-3 sm:p-5 relative h-full w-full overflow-hidden">
         
-        <div id="status-subtext" class="responsive-subtext font-bold tracking-wide uppercase opacity-90 mb-3 sm:mb-6 max-w-full break-words">
-            Đang kết nối...
+        <!-- Nút đổi cài đặt & Badge định danh -->
+        <div class="flex justify-between items-center z-10 w-full px-1">
+            <div id="caster-desk-badge" class="bg-black/60 border border-white/20 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider text-amber-300 shadow">
+                Đang kết nối...
+            </div>
+            <button id="btn-caster-reset" class="bg-black/50 hover:bg-black/80 border border-white/20 px-3 py-1 rounded-full text-xs font-bold text-slate-200 transition shadow">
+                🔄 Cài đặt
+            </button>
         </div>
 
-        <div id="custom-msg" class="responsive-msg font-extrabold max-w-5xl w-full text-amber-300 bg-black/80 border-2 sm:border-4 border-amber-400 px-4 sm:px-6 py-3 sm:py-5 rounded-2xl shadow-2xl hidden animate-pulse-fast break-words">
+        <!-- PHẦN TRÊN (25%): TÍN HIỆU CALL TALLY & ĐẾM NGƯỢC -->
+        <div class="flex flex-col items-center justify-center my-2 transition-all">
+            <div id="caster-countdown-banner" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/80 px-4 py-1.5 rounded-xl mb-2 tracking-wider uppercase border border-amber-400/60 hidden animate-pulse-fast shadow-xl">
+                ⏱️ ĐẾM NGƯỢC: <span id="caster-timer-num">5</span>s
+            </div>
+
+            <div id="status-badge" class="text-2xl sm:text-4xl font-black uppercase tracking-wider px-6 py-2 rounded-2xl bg-black/40 shadow-xl border-2 border-white/20 max-w-full text-center">
+                CONNECTING...
+            </div>
+            <div id="status-subtext" class="text-xs sm:text-sm font-bold tracking-wide uppercase opacity-90 mt-1 text-center">
+                Đang kết nối...
+            </div>
         </div>
 
-        <div class="absolute bottom-2 sm:bottom-3 flex flex-col items-center gap-0.5 opacity-70 pointer-events-none">
-            <div class="text-[10px] sm:text-xs font-bold text-slate-300 tracking-wider uppercase">VEDC Broadcast Production System</div>
-            <div id="wake-lock-status" class="text-[9px] sm:text-[10px] font-semibold text-slate-400">💡 Screen Wake Lock: Off</div>
+        <!-- LỜI NHẮC KHẨN CẤP (NẾU CÓ) -->
+        <div id="custom-msg" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/90 border-2 border-amber-400 px-4 py-2 rounded-xl shadow-xl hidden animate-pulse-fast text-center mx-auto my-1 max-w-3xl w-full">
+        </div>
+
+        <!-- PHẦN DƯỚI (75%): MC SCRIPT & CHỮ TO RÕ RÀNG (ĐẶC BIỆT CHO IPAD DỌC) -->
+        <div class="flex-1 bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-4 sm:p-6 flex flex-col shadow-2xl overflow-y-auto my-2">
+            <div class="flex justify-between items-center mb-2 pb-2 border-b border-slate-800">
+                <span class="text-xs font-extrabold text-amber-400 uppercase tracking-widest">📝 MC SCRIPT / GHI CHÚ HIỆN TRƯỜNG</span>
+                <span class="text-[11px] text-slate-400 font-medium">VEDC Live Teleprompter</span>
+            </div>
+            <div id="mc-script-content" class="flex-1 text-slate-200 text-lg sm:text-2xl font-semibold leading-relaxed space-y-3">
+                <p class="opacity-80 italic">Chờ đạo diễn gửi nội dung kịch bản hoặc hướng dẫn trực tiếp lên màn hình...</p>
+                <p>🔹 <strong>Phần mở đầu:</strong> Giới thiệu nhà tài trợ, ổn định khán giả trường quay.</p>
+                <p>🔹 <strong>Minigame:</strong> Đọc câu hỏi tương tác, gọi tên khán giả giơ tay nhanh nhất.</p>
+            </div>
+        </div>
+
+        <!-- Chân trang định danh -->
+        <div class="flex flex-col items-center gap-0.5 opacity-60 pointer-events-none">
+            <div class="text-[10px] font-bold text-slate-300 tracking-wider uppercase">VEDC Broadcast Production System</div>
+            <div id="wake-lock-status" class="text-[9px] font-semibold text-slate-400">💡 Screen Wake Lock: Off</div>
         </div>
     </div>
 
@@ -176,9 +180,9 @@
                 </div>
 
                 <div class="bg-slate-950/60 p-3.5 sm:p-4 rounded-2xl border border-slate-800">
-                    <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Chú ý lời nhắc (Bàn 1):</label>
+                    <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Lời nhắc / Kịch bản Script (Bàn 1):</label>
                     <div class="flex gap-2">
-                        <input type="text" id="input-c1-msg" placeholder="Gõ lời nhắc khẩn cấp..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                        <input type="text" id="input-c1-msg" placeholder="Nhập lời nhắc hoặc script cho MC..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
                         <button id="btn-c1-sendmsg" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition whitespace-nowrap">GỬI</button>
                         <button id="btn-c1-clearmsg" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 transition whitespace-nowrap">XÓA</button>
                     </div>
@@ -206,9 +210,9 @@
                 </div>
 
                 <div class="bg-slate-950/60 p-3.5 sm:p-4 rounded-2xl border border-slate-800">
-                    <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Chú ý lời nhắc (Bàn 2):</label>
+                    <label class="block text-xs font-bold uppercase mb-2 text-amber-400">⚠️ Lời nhắc / Kịch bản Script (Bàn 2):</label>
                     <div class="flex gap-2">
-                        <input type="text" id="input-c2-msg" placeholder="Gõ lời nhắc khẩn cấp..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                        <input type="text" id="input-c2-msg" placeholder="Nhập lời nhắc hoặc script cho MC..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
                         <button id="btn-c2-sendmsg" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2 rounded-xl text-xs font-black transition whitespace-nowrap">GỬI</button>
                         <button id="btn-c2-clearmsg" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 transition whitespace-nowrap">XÓA</button>
                     </div>
@@ -257,76 +261,28 @@
             { id: 'giao-luu-end', titleEng: 'KẾT THÚC GIAO LƯU', titleVie: 'END INTERACTION', bg: '#475569', text: '#ffffff' }
         ];
 
-        const setupView = document.getElementById('setup-view');
-        const stepRoleContainer = document.getElementById('step-role-container');
-        const stepJobContainer = document.getElementById('step-job-container');
-        const stepCasterDeskContainer = document.getElementById('step-caster-desk-container');
-        const setupStepTitle = document.getElementById('setup-step-title');
-
+        // Mặc định nếu không truyền role thì vào thẳng Director Job 1 cho nhanh gọn hiện trường
         if (!role) {
-            setupView.classList.remove('hidden');
-            stepRoleContainer.classList.remove('hidden');
-            stepJobContainer.classList.add('hidden');
-            stepCasterDeskContainer.classList.add('hidden');
-            setupStepTitle.innerText = "Bước 1: Chọn vai trò truy cập hệ thống";
-        } else if (!jobId) {
-            setupView.classList.remove('hidden');
-            stepRoleContainer.classList.add('hidden');
-            stepJobContainer.classList.remove('hidden');
-            stepCasterDeskContainer.classList.add('hidden');
-            setupStepTitle.innerText = `Bước 2: Chọn Job & Loại hình bàn`;
-        } else if (role === 'caster' && !casterId) {
-            setupView.classList.remove('hidden');
-            stepRoleContainer.classList.add('hidden');
-            stepJobContainer.classList.add('hidden');
-            stepCasterDeskContainer.classList.remove('hidden');
-            setupStepTitle.innerText = `Bước 3: Chọn Bàn (Job: ${jobId} - ${mode.toUpperCase()})`;
-        } else {
-            startApp();
+            role = 'director';
+            if (!jobId) jobId = 'job1';
         }
 
-        window.selectRole = function(selectedRole) {
-            urlParams.set('role', selectedRole);
-            window.location.search = urlParams.toString();
-        };
+        if (role === 'caster' && !casterId) {
+            casterId = 'caster_1'; // Mặc định bàn 1 nếu mobile/ipad truy cập nhanh
+        }
 
-        window.selectPresetJob = function(jobName, jobMode) {
-            urlParams.set('job', cleanJobId(jobName));
-            urlParams.set('mode', jobMode);
-            window.location.search = urlParams.toString();
-        };
-
-        window.submitCustomJob = function(jobMode) {
-            const val = document.getElementById('custom-job-input').value.trim();
-            if (val) window.selectPresetJob(val, jobMode);
-            else alert("Vui lòng nhập tên Job!");
-        };
-
-        window.selectCasterDesk = function(selectedDeskId) {
-            urlParams.set('id', selectedDeskId);
-            window.location.search = urlParams.toString();
-        };
-
-        window.backToRoleStep = function() {
-            urlParams.delete('role');
-            window.location.search = urlParams.toString();
-        };
-
-        window.backToJobStep = function() {
-            urlParams.delete('job');
-            urlParams.delete('mode');
-            window.location.search = urlParams.toString();
-        };
+        startApp();
 
         window.resetSetup = function() {
             window.location.href = window.location.pathname;
         };
 
-        document.getElementById('btn-change-job').onclick = resetSetup;
-        document.getElementById('btn-caster-reset').onclick = resetSetup;
+        const changeJobBtn = document.getElementById('btn-change-job');
+        if (changeJobBtn) changeJobBtn.onclick = resetSetup;
+        const casterResetBtn = document.getElementById('btn-caster-reset');
+        if (casterResetBtn) casterResetBtn.onclick = resetSetup;
 
         function startApp() {
-            setupView.classList.add('hidden');
             if (role === 'director') {
                 document.getElementById('director-view').classList.remove('hidden');
                 document.getElementById('job-badge').innerText = `🏷️ Job: ${jobId} (${mode.toUpperCase()})`;
@@ -439,6 +395,7 @@
             const statusBadge = document.getElementById('status-badge');
             const statusSubtext = document.getElementById('status-subtext');
             const customMsg = document.getElementById('custom-msg');
+            const mcScriptContent = document.getElementById('mc-script-content');
             const countdownBanner = document.getElementById('caster-countdown-banner');
             const timerNum = document.getElementById('caster-timer-num');
             const rowId = `${jobId}_${targetId}`;
@@ -463,8 +420,10 @@
 
                 if (data.message !== undefined) {
                     if (data.message && data.message.trim() !== '') {
-                        customMsg.innerText = `⚠️ LỜI NHẮC: ${data.message}`;
+                        customMsg.innerText = `⚠️ CHÚ Ý: ${data.message}`;
                         customMsg.classList.remove('hidden');
+                        // Đồng thời tự động cập nhật vào khung script MC để hiển thị chữ to rõ
+                        mcScriptContent.innerHTML = `<div class="p-3 bg-amber-500/20 border-l-4 border-amber-400 text-amber-200 font-bold rounded">${data.message}</div>` + mcScriptContent.innerHTML;
                     } else {
                         customMsg.classList.add('hidden');
                     }
