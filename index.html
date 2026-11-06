@@ -127,7 +127,8 @@
                         </p>
                     </div>
                     <div>
-                        <a href="./tally/index.html?role=director&job=job1&mode=caster" class="w-full py-3.5 px-4 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/30">
+                        <!-- Bấm vào sẽ trỏ ra trang chọn vai trò (Hình 2) -->
+                        <a href="./tally/" class="w-full py-3.5 px-4 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/30">
                             <span>TRUY CẬP TALLY HUB</span>
                             <span>➔</span>
                         </a>
@@ -227,10 +228,8 @@
 
     <!-- SCRIPT XỬ LÝ BẢO MẬT ĐĂNG NHẬP -->
     <script>
-        // Mật khẩu nội bộ công ty
         const INTERNAL_PASSWORD = 'vedc'; 
 
-        // Kiểm tra trạng thái đăng nhập sẵn có trong session
         window.addEventListener('DOMContentLoaded', () => {
             const isAuth = sessionStorage.getItem('vedc_hub_auth');
             if (isAuth === 'true') {
