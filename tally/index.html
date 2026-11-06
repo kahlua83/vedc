@@ -23,7 +23,7 @@
 </head>
 <body id="main-body" class="bg-slate-950 text-white h-screen w-screen flex flex-col justify-between overflow-x-hidden font-sans select-none" style="background-color: #020617; transition: background-color 0.2s ease;">
 
-    <!-- SETUP VIEW -->
+    <!-- SETUP VIEW (BƯỚC CHỌN VAI TRÒ BAN ĐẦU) -->
     <div id="setup-view" class="hidden flex-1 flex flex-col justify-center items-center p-4 sm:p-6 text-center bg-slate-950 min-h-screen">
         <div class="bg-slate-900 border-2 border-slate-800 p-6 sm:p-8 rounded-3xl max-w-md w-full shadow-2xl">
             <h1 class="text-2xl sm:text-3xl font-black text-red-500 mb-2 flex items-center justify-center gap-2">
@@ -89,7 +89,6 @@
     <!-- CASTER / MC SCREEN VIEW (SPLIT LAYOUT CHO IPAD DỌC) -->
     <div id="caster-view" class="hidden flex-1 flex flex-col justify-between p-3 sm:p-5 relative h-full w-full overflow-hidden">
         
-        <!-- Nút đổi cài đặt & Badge định danh -->
         <div class="flex justify-between items-center z-10 w-full px-1">
             <div id="caster-desk-badge" class="bg-black/60 border border-white/20 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider text-amber-300 shadow">
                 Đang kết nối...
@@ -99,7 +98,6 @@
             </button>
         </div>
 
-        <!-- PHẦN TRÊN (25%): TÍN HIỆU CALL TALLY & ĐẾM NGƯỢC -->
         <div class="flex flex-col items-center justify-center my-2 transition-all">
             <div id="caster-countdown-banner" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/80 px-4 py-1.5 rounded-xl mb-2 tracking-wider uppercase border border-amber-400/60 hidden animate-pulse-fast shadow-xl">
                 ⏱️ ĐẾM NGƯỢC: <span id="caster-timer-num">5</span>s
@@ -113,11 +111,9 @@
             </div>
         </div>
 
-        <!-- LỜI NHẮC KHẨN CẤP (NẾU CÓ) -->
         <div id="custom-msg" class="text-sm sm:text-base font-extrabold text-amber-300 bg-black/90 border-2 border-amber-400 px-4 py-2 rounded-xl shadow-xl hidden animate-pulse-fast text-center mx-auto my-1 max-w-3xl w-full">
         </div>
 
-        <!-- PHẦN DƯỚI (75%): MC SCRIPT & CHỮ TO RÕ RÀNG (ĐẶC BIỆT CHO IPAD DỌC) -->
         <div class="flex-1 bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-4 sm:p-6 flex flex-col shadow-2xl overflow-y-auto my-2">
             <div class="flex justify-between items-center mb-2 pb-2 border-b border-slate-800">
                 <span class="text-xs font-extrabold text-amber-400 uppercase tracking-widest">📝 MC SCRIPT / GHI CHÚ HIỆN TRƯỜNG</span>
@@ -130,7 +126,6 @@
             </div>
         </div>
 
-        <!-- Chân trang định danh -->
         <div class="flex flex-col items-center gap-0.5 opacity-60 pointer-events-none">
             <div class="text-[10px] font-bold text-slate-300 tracking-wider uppercase">VEDC Broadcast Production System</div>
             <div id="wake-lock-status" class="text-[9px] font-semibold text-slate-400">💡 Screen Wake Lock: Off</div>
@@ -261,17 +256,66 @@
             { id: 'giao-luu-end', titleEng: 'KẾT THÚC GIAO LƯU', titleVie: 'END INTERACTION', bg: '#475569', text: '#ffffff' }
         ];
 
-        // Mặc định nếu không truyền role thì vào thẳng Director Job 1 cho nhanh gọn hiện trường
+        const setupView = document.getElementById('setup-view');
+        const stepRoleContainer = document.getElementById('step-role-container');
+        const stepJobContainer = document.getElementById('step-job-container');
+        const stepCasterDeskContainer = document.getElementById('step-caster-desk-container');
+        const setupStepTitle = document.getElementById('setup-step-title');
+
         if (!role) {
-            role = 'director';
-            if (!jobId) jobId = 'job1';
+            setupView.classList.remove('hidden');
+            stepRoleContainer.classList.remove('hidden');
+            stepJobContainer.classList.add('hidden');
+            stepCasterDeskContainer.classList.add('hidden');
+            setupStepTitle.innerText = "Bước 1: Chọn vai trò truy cập hệ thống";
+        } else if (!jobId) {
+            setupView.classList.remove('hidden');
+            stepRoleContainer.classList.add('hidden');
+            stepJobContainer.classList.remove('hidden');
+            stepCasterDeskContainer.classList.add('hidden');
+            setupStepTitle.innerText = `Bước 2: Chọn Job & Loại hình bàn`;
+        } else if (role === 'caster' && !casterId) {
+            setupView.classList.remove('hidden');
+            stepRoleContainer.classList.add('hidden');
+            stepJobContainer.classList.add('hidden');
+            stepCasterDeskContainer.classList.remove('hidden');
+            setupStepTitle.innerText = `Bước 3: Chọn Bàn (Job: ${jobId} - ${mode.toUpperCase()})`;
+        } else {
+            startApp();
         }
 
-        if (role === 'caster' && !casterId) {
-            casterId = 'caster_1'; // Mặc định bàn 1 nếu mobile/ipad truy cập nhanh
-        }
+        window.selectRole = function(selectedRole) {
+            urlParams.set('role', selectedRole);
+            window.location.search = urlParams.toString();
+        };
 
-        startApp();
+        window.selectPresetJob = function(jobName, jobMode) {
+            urlParams.set('job', cleanJobId(jobName));
+            urlParams.set('mode', jobMode);
+            window.location.search = urlParams.toString();
+        };
+
+        window.submitCustomJob = function(jobMode) {
+            const val = document.getElementById('custom-job-input').value.trim();
+            if (val) window.selectPresetJob(val, jobMode);
+            else alert("Vui lòng nhập tên Job!");
+        };
+
+        window.selectCasterDesk = function(selectedDeskId) {
+            urlParams.set('id', selectedDeskId);
+            window.location.search = urlParams.toString();
+        };
+
+        window.backToRoleStep = function() {
+            urlParams.delete('role');
+            window.location.search = urlParams.toString();
+        };
+
+        window.backToJobStep = function() {
+            urlParams.delete('job');
+            urlParams.delete('mode');
+            window.location.search = urlParams.toString();
+        };
 
         window.resetSetup = function() {
             window.location.href = window.location.pathname;
@@ -283,6 +327,7 @@
         if (casterResetBtn) casterResetBtn.onclick = resetSetup;
 
         function startApp() {
+            setupView.classList.add('hidden');
             if (role === 'director') {
                 document.getElementById('director-view').classList.remove('hidden');
                 document.getElementById('job-badge').innerText = `🏷️ Job: ${jobId} (${mode.toUpperCase()})`;
@@ -422,7 +467,6 @@
                     if (data.message && data.message.trim() !== '') {
                         customMsg.innerText = `⚠️ CHÚ Ý: ${data.message}`;
                         customMsg.classList.remove('hidden');
-                        // Đồng thời tự động cập nhật vào khung script MC để hiển thị chữ to rõ
                         mcScriptContent.innerHTML = `<div class="p-3 bg-amber-500/20 border-l-4 border-amber-400 text-amber-200 font-bold rounded">${data.message}</div>` + mcScriptContent.innerHTML;
                     } else {
                         customMsg.classList.add('hidden');
