@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VEDC Operational Hub | Broadcast & Event Systems</title>
+    <title>VEDC Operational Hub | Enterprise Control Center</title>
     
-    <!-- Hệ thống Favicon chính chủ VEDC -->
+    <!-- Hệ thống Favicon chuẩn chính chủ VEDC -->
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -23,167 +23,244 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .gold-border-glow:hover {
-            border-color: #f59e0b;
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+        .red-gradient-glow {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        }
+
+        .card-hover-border:hover {
+            border-color: #dc2626;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.15);
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+<body class="bg-black text-slate-100 min-h-screen flex flex-col justify-between selection:bg-red-600 selection:text-white">
 
-    <!-- ==================== HEADER TỔNG ==================== -->
-    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-amber-500/20">
-                    V
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
-                        <span>VEDC OPERATIONAL HUB</span>
-                    </h1>
-                    <p class="text-[11px] font-semibold text-amber-400/90 tracking-widest uppercase">Broadcast & Event Management Platform</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    SYSTEM ONLINE
-                </span>
-            </div>
-        </div>
-    </header>
-
-    <!-- ==================== MAIN DASHBOARD ==================== -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full">
-        <!-- Banner chào mừng -->
-        <div class="mb-10 text-center sm:text-left border-b border-slate-800 pb-8">
-            <h2 class="text-3xl sm:text-4xl font-black mb-3 text-white">
-                Trung Tâm Điều Hành <span class="gold-gradient-text">Hiện Trường VEDC</span>
-            </h2>
-            <p class="text-slate-400 text-sm sm:text-base max-w-3xl leading-relaxed">
-                Hệ thống tích hợp các bộ công cụ vận hành realtime, hỗ trợ tối đa công tác đạo diễn, kỹ thuật hình ảnh, quản lý kịch bản và thủ tục hành chính on-site.
-            </p>
-        </div>
-
-        <!-- Lưới 4 Phân hệ chính (4 Core Modules) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+    <!-- ==================== MÀN HÌNH ĐĂNG NHẬP (SECURITY GATE) ==================== -->
+    <div id="auth-gate" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-slate-800 p-8 rounded-3xl max-w-md w-full shadow-2xl text-center relative overflow-hidden">
+            <!-- Điểm nhấn viền đỏ thương hiệu -->
+            <div class="absolute top-0 left-0 right-0 h-1.5 red-gradient-glow"></div>
             
-            <!-- MODULE 1: TALLY SYSTEM (ACTIVE) -->
-            <div class="group bg-slate-900 border-2 border-slate-800 hover:border-amber-500/60 rounded-3xl p-6 sm:p-8 transition-all duration-300 gold-border-glow flex flex-col justify-between shadow-xl">
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-14 h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-2xl text-indigo-400">
-                            🎛️
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">
-                            Đang hoạt động
-                        </span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
-                        1. Tally & Signal Control
-                    </h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                        Điều phối tín hiệu Realtime giữa Đạo diễn và màn hình Caster / Stage MC. Tích hợp kịch bản kép, đếm ngược khẩn cấp và Screen Wake Lock.
-                    </p>
-                </div>
-                <div>
-                    <a href="?role=director&job=job1" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20">
-                        <span>TRUY CẬP TALLY HUB</span>
-                        <span>➔</span>
-                    </a>
-                </div>
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-black border-2 border-red-600 flex items-center justify-center shadow-lg shadow-red-900/50 overflow-hidden p-2">
+                <img src="android-chrome-192x192.png" alt="VEDC Logo" class="w-full h-full object-contain">
             </div>
 
-            <!-- MODULE 2: HỢP ĐỒNG & THUẾ (COMING SOON) -->
-            <div class="group bg-slate-900 border-2 border-slate-800/80 rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between opacity-95">
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl text-amber-400">
-                            📄
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
-                            Giai đoạn 2
-                        </span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">
-                        2. Fast Contract & Tax Calculator
-                    </h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                        Tính chi trả CTV, khấu trừ thuế TNCN 10%, tự động quét OCR 2 mặt CCCD và điền mẫu Hợp đồng khoán việc VEDC để in & ký trực tiếp tại site.
-                    </p>
-                </div>
-                <div>
-                    <button disabled class="w-full py-3.5 px-4 bg-slate-800 text-slate-500 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2 border border-slate-700/50">
-                        <span>ĐANG KHỞI TẠO NGUỒN...</span>
-                    </button>
-                </div>
-            </div>
+            <h2 class="text-2xl font-black text-white mb-1 tracking-tight">VEDC SECURE PORTAL</h2>
+            <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest font-semibold">Khu vực kiểm soát nội bộ nhân sự</p>
 
-            <!-- MODULE 3: CAMERA & LENS ADVISOR (COMING SOON) -->
-            <div class="group bg-slate-900 border-2 border-slate-800/80 rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between opacity-95">
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4 text-left">
                 <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-2xl text-teal-400">
-                            🎥
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
-                            Giai đoạn 3
-                        </span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">
-                        3. Camera & Lens Setup Advisor
-                    </h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                        Cố vấn thông số quay/chụp theo môi trường (LED sân khấu, trong nhà, thiếu sáng), khoảng cách, ống kính và góc máy tối ưu cho từng bộ môn.
-                    </p>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Mật khẩu truy cập hệ thống:</label>
+                    <input type="password" id="access-password" placeholder="Nhập mật khẩu nội bộ..." required 
+                           class="w-full bg-black border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600 transition">
                 </div>
-                <div>
-                    <button disabled class="w-full py-3.5 px-4 bg-slate-800 text-slate-500 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2 border border-slate-700/50">
-                        <span>ĐANG KHỞI TẠO NGUỒN...</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- MODULE 4: REALTIME RUNDOWN (COMING SOON) -->
-            <div class="group bg-slate-900 border-2 border-slate-800/80 rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between opacity-95">
-                <div>
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-2xl text-purple-400">
-                            ⏱️
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
-                            Giai đoạn 4
-                        </span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">
-                        4. Realtime Master Rundown
-                    </h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                        Đồng hồ Master đếm ngược kịch bản sự kiện theo thời gian thực (Check-in, Rehearsal, On-Air). Đồng bộ cho toàn bộ TV/Tablet hiện trường.
-                    </p>
-                </div>
-                <div>
-                    <button disabled class="w-full py-3.5 px-4 bg-slate-800 text-slate-500 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2 border border-slate-700/50">
-                        <span>ĐANG KHỞI TẠO NGUỒN...</span>
-                    </button>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-slate-500 text-xs">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <div class="font-bold text-slate-400">
-                PRODUCED BY <span class="text-amber-400">VEDC ENTERPRISE</span> &copy; 2026
-            </div>
-            <div class="text-[11px] text-slate-600">
-                Internal Operational Hub System &bull; Version 2.0.0
+                <div id="login-error" class="text-red-500 text-xs font-semibold hidden">⚠️ Mật khẩu không chính xác. Vui lòng thử lại!</div>
+                <button type="submit" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-xl transition shadow-lg shadow-red-600/30 uppercase tracking-wider">
+                    XÁC THỰC TRUY CẬP ➔
+                </button>
+            </form>
+            <div class="mt-6 text-[11px] text-slate-600 font-medium">
+                VEDC Enterprise &bull; Internal Security Protocol
             </div>
         </div>
-    </footer>
+    </div>
 
+    <!-- ==================== GIAO DIỆN CHÍNH (MAIN HUB) ==================== -->
+    <div id="main-hub-content" class="hidden flex-1 flex flex-col justify-between">
+        <!-- HEADER -->
+        <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-black border-2 border-red-600 flex items-center justify-center shadow-lg shadow-red-900/40 p-1.5">
+                        <img src="android-chrome-192x192.png" alt="VEDC Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <h1 class="font-black text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
+                            <span>VEDC OPERATIONAL HUB</span>
+                        </h1>
+                        <p class="text-[11px] font-bold text-red-500 tracking-widest uppercase">Broadcast & Event Management Platform</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        SECURE SESSION
+                    </span>
+                    <button onclick="handleLogout()" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg text-xs font-bold text-slate-300 transition">
+                        ĐĂNG XUẤT 🔓
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full">
+            <div class="mb-10 text-center sm:text-left border-b border-slate-900 pb-8">
+                <h2 class="text-3xl sm:text-4xl font-black mb-3 text-white">
+                    Trung Tâm Điều Hành <span class="gold-gradient-text">Hiện Trường VEDC</span>
+                </h2>
+                <p class="text-slate-400 text-sm sm:text-base max-w-3xl leading-relaxed">
+                    Hệ thống tích hợp công cụ điều phối realtime, quản lý kỹ thuật hình ảnh, kịch bản sự kiện và thủ tục hành chính on-site tiêu chuẩn doanh nghiệp.
+                </p>
+            </div>
+
+            <!-- 4 CORE MODULES GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                
+                <!-- MODULE 1: TALLY SYSTEM (ACTIVE) -->
+                <div class="group bg-slate-950 border-2 border-slate-900 hover:border-red-600/80 rounded-3xl p-6 sm:p-8 transition-all duration-300 card-hover-border flex flex-col justify-between shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-600/5 rounded-full blur-2xl group-hover:bg-red-600/10 transition-all"></div>
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 rounded-2xl bg-red-600/10 border border-red-600/30 flex items-center justify-center text-2xl text-red-500 font-bold">
+                                🎛️
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">
+                                Sẵn sàng trực chiến
+                            </span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-red-500 transition-colors">
+                            1. Tally & Signal Control
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Điều phối tín hiệu Realtime giữa Đạo diễn và màn hình Caster / Stage MC. Hỗ trợ kịch bản kép, đếm ngược khẩn cấp và chống tắt màn hình.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="?role=director&job=job1" class="w-full py-3.5 px-4 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/30">
+                            <span>TRUY CẬP TALLY HUB</span>
+                            <span>➔</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- MODULE 2: HỢP ĐỒNG & THUẾ (COMING SOON) -->
+                <div class="group bg-slate-950 border-2 border-slate-900 rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between opacity-90">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl text-amber-400 font-bold">
+                                📄
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
+                                Giai đoạn 2
+                            </span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            2. Fast Contract & Tax Calculator
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Tính chi trả CTV, khấu trừ thuế TNCN 10%, quét OCR 2 mặt CCCD và tự động điền mẫu Hợp đồng khoán việc VEDC để in & ký trực tiếp tại site.
+                        </p>
+                    </div>
+                    <div>
+                        <button disabled class="w-full py-3.5 px-4 bg-slate-900 text-slate-600 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2 border border-slate-800">
+                            <span>ĐANG KHỞI TẠO MODULE...</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MODULE 3: CAMERA & LENS ADVISOR (COMING SOON) -->
+                <div class="group bg-slate-950 border-2 border-slate-900 rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between opacity-90">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl text-slate-300 font-bold">
+                                🎥
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
+                                Giai đoạn 3
+                            </span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            3. Camera & Lens Setup Advisor
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Cố vấn thông số quay/chụp theo môi trường (LED sân khấu, trong nhà, thiếu sáng), khoảng cách, ống kính và góc máy tối ưu cho từng bộ môn.
+                        </p>
+                    </div>
+                    <div>
+                        <button disabled class="w-full py-3.5 px-4 bg-slate-900 text-slate-600 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2 border border-slate-800">
+                            <span>ĐANG KHỞI TẠO MODULE...</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MODULE 4: REALTIME RUNDOWN (COMING SOON) -->
+                <div class="group bg-slate-950 border-2 border-slate-900 rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between opacity-90">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl text-slate-300 font-bold">
+                                ⏱️
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
+                                Giai đoạn 4
+                            </span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            4. Realtime Master Rundown
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Đồng hồ Master đếm ngược kịch bản sự kiện theo thời gian thực (Check-in, Rehearsal, On-Air). Đồng bộ cho toàn bộ TV/Tablet hiện trường.
+                        </p>
+                    </div>
+                    <div>
+                        <button disabled class="w-full py-3.5 px-4 bg-slate-900 text-slate-600 font-bold text-sm rounded-xl cursor-not-allowed flex items-center justify-center gap-2 border border-slate-800">
+                            <span>ĐANG KHỞI TẠO MODULE...</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-slate-900 bg-black py-6 text-center text-slate-500 text-xs">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <div class="font-bold text-slate-400">
+                    PRODUCED BY <span class="text-red-500">VEDC ENTERPRISE</span> &copy; 2026
+                </div>
+                <div class="text-[11px] text-slate-600">
+                    Internal Operational Hub System &bull; Secure Auth Edition
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- SCRIPT XỬ LÝ BẢO MẬT ĐĂNG NHẬP -->
+    <script>
+        // Mật khẩu nội bộ công ty (Ca ca có thể thay đổi tùy ý bên dưới, ví dụ: 'vedc2026' hoặc 'vedc@hn')
+        const INTERNAL_PASSWORD = 'vedc'; 
+
+        // Kiểm tra trạng thái đăng nhập sẵn có trong session
+        window.addEventListener('DOMContentLoaded', () => {
+            const isAuth = sessionStorage.getItem('vedc_hub_auth');
+            if (isAuth === 'true') {
+                unlockHub();
+            }
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const passInput = document.getElementById('access-password').value;
+            const errorEl = document.getElementById('login-error');
+
+            if (passInput === INTERNAL_PASSWORD) {
+                sessionStorage.setItem('vedc_hub_auth', 'true');
+                unlockHub();
+            } else {
+                errorEl.classList.remove('hidden');
+                document.getElementById('access-password').value = '';
+            }
+        }
+
+        function unlockHub() {
+            document.getElementById('auth-gate').classList.add('hidden');
+            document.getElementById('main-hub-content').classList.remove('hidden');
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('vedc_hub_auth');
+            location.reload();
+        }
+    </script>
 </body>
 </html>
