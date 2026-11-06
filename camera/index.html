@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VEDC Camera & Lens Advisor</title>
+    <title>VEDC Interactive Camera & Lens Advisor</title>
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -21,190 +21,251 @@
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-red-600 selection:text-white">
 
     <!-- HEADER -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+    <header class="border-b border-slate-800 bg-slate-900/85 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <a href="../" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-slate-700">
                     🏠 HUB TỔNG
                 </a>
                 <div>
-                    <h1 class="font-black text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
-                        <span>🎥 CAMERA & LENS ADVISOR</span>
+                    <h1 class="font-black text-base sm:text-xl tracking-tight text-white flex items-center gap-2">
+                        <span>🎛️ CAMERA & LENS SETUP ADVISOR</span>
                     </h1>
-                    <p class="text-[11px] font-bold text-red-500 tracking-widest uppercase">VEDC Production Technical Suite</p>
+                    <p class="text-[10px] sm:text-[11px] font-bold text-red-500 tracking-widest uppercase">VEDC Interactive On-Site Tool</p>
                 </div>
             </div>
-            <div class="text-xs font-bold text-amber-400 bg-amber-950/60 border border-amber-700/50 px-3 py-1 rounded-full">
-                ⚡ On-Site Setup Guide
+            <div class="text-xs font-bold text-amber-400 bg-amber-950/60 border border-amber-700/50 px-3 py-1 rounded-full hidden sm:block">
+                ⚡ Quick Config Generator
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+    <!-- MAIN INTERACTIVE TOOL -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-6">
         
-        <!-- TABS NAVIGATION -->
-        <div class="flex flex-wrap gap-2 sm:gap-4 mb-8 justify-center sm:justify-start border-b border-slate-800 pb-4">
-            <button onclick="switchTab('zve10')" id="tab-zve10" class="px-5 py-3 rounded-2xl font-black text-sm transition flex items-center gap-2 bg-red-600 text-white shadow-lg shadow-red-600/30">
-                <span>📹 SONY ZV-E10</span>
-                <span class="text-[10px] bg-black/40 px-2 py-0.5 rounded">Vidio / Livestream</span>
-            </button>
-            <button onclick="switchTab('a6000')" id="tab-a6000" class="px-5 py-3 rounded-2xl font-black text-sm transition flex items-center gap-2 bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800 hover:text-white">
-                <span>📸 SONY A6000</span>
-                <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded">Photo / Backup</span>
-            </button>
-            <button onclick="switchTab('general')" id="tab-general" class="px-5 py-3 rounded-2xl font-black text-sm transition flex items-center gap-2 bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800 hover:text-white">
-                <span>⚙️ GENERAL RULES</span>
-                <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded">Chống sọc LED</span>
+        <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-black text-white mb-2">Tra Cứu Thông Số <span class="gold-gradient">Thực Chiến</span></h2>
+            <p class="text-xs sm:text-sm text-slate-400">Chọn máy, ống kính và môi trường tác nghiệp để hệ thống đề xuất thông số chuẩn chỉnh nhất.</p>
+        </div>
+
+        <!-- BỘ LỌC TƯƠNG TÁC (CONTROLS) -->
+        <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- 1. Chọn Máy -->
+                <div>
+                    <label class="block text-xs font-extrabold text-amber-400 uppercase mb-2">1. Chọn Body Máy:</label>
+                    <select id="select-body" onchange="updateLensOptions()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-red-500 transition">
+                        <option value="a6000">Sony A6000</option>
+                        <option value="zve10">Sony ZV-E10</option>
+                    </select>
+                </div>
+
+                <!-- 2. Chọn Lens -->
+                <div>
+                    <label class="block text-xs font-extrabold text-amber-400 uppercase mb-2">2. Chọn Lens Sử Dụng:</label>
+                    <select id="select-lens" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-red-500 transition">
+                        <!-- Sẽ được fill động bằng JavaScript -->
+                    </select>
+                </div>
+
+                <!-- 3. Chọn Môi trường / Mục đích -->
+                <div>
+                    <label class="block text-xs font-extrabold text-amber-400 uppercase mb-2">3. Môi trường & Mục đích:</label>
+                    <select id="select-env" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none focus:border-red-500 transition">
+                        <option value="stage">🎤 Sân khấu sự kiện / LED (Indoor)</option>
+                        <option value="portrait">🏆 Chụp Chân dung Caster / Model</option>
+                        <option value="vlog">🎬 Quay Vlog / Review / Hậu trường</option>
+                        <option value="wide">🌆 Không gian rộng / Crowd shot</option>
+                    </select>
+                </div>
+            </div>
+
+            <button onclick="generateConfig()" class="w-full py-4 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-xl transition shadow-lg shadow-red-600/30 uppercase tracking-wider flex items-center justify-center gap-2">
+                <span>🚀 XEM GỢI Ý THÔNG SỐ & TIPS</span>
             </button>
         </div>
 
-        <!-- TAB CONTENT: SONY ZV-E10 -->
-        <div id="content-zve10" class="space-y-6">
-            <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-slate-800">
-                    <div>
-                        <h2 class="text-2xl font-black text-white flex items-center gap-2">
-                            <span>Sony ZV-E10 Setup Profile</span>
-                        </h2>
-                        <p class="text-xs text-slate-400 mt-1">Cấu hình chuyên dụng quay sân khấu, livestream, review & bắt góc sự kiện.</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="bg-indigo-950 text-indigo-300 border border-indigo-700/50 px-3 py-1 rounded-full text-xs font-bold">Lens: 16-50mm & 12mm Samyang</span>
-                    </div>
+        <!-- BẢNG KẾT QUẢ ĐẦU RA (OUTPUT CARD) -->
+        <div id="result-card" class="bg-slate-900 border-2 border-red-600/60 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-4 border-b border-slate-800">
+                <div>
+                    <span id="res-badge" class="px-3 py-1 rounded-full text-xs font-black bg-red-500/10 text-red-400 border border-red-500/30 uppercase tracking-wider">
+                        Đang chờ lựa chọn...
+                    </span>
+                    <h3 id="res-title" class="text-xl sm:text-2xl font-black text-white mt-2">Vui lòng bấm nút tra cứu phía trên</h3>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Setup Quay Video -->
-                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
-                        <h3 class="text-sm font-extrabold text-red-500 uppercase tracking-wider flex items-center gap-2">
-                            <span>🎬 THÔNG SỐ QUAY VIDEO (RECORDING)</span>
-                        </h3>
-                        <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
-                            <li>• <strong>Độ phân giải:</strong> 4K 25p / 30p (Oversampled cực nét) hoặc Full HD 60p (nếu cần slow-motion).</li>
-                            <li>• <strong>Tốc độ màn chập (Shutter):</strong> Cố định <strong class="text-amber-400">1/50s</strong> (hệ PAL) hoặc <strong class="text-amber-400">1/60s</strong> (hệ NTSC) để tránh sọc màn hình LED sân khấu.</li>
-                            <li>• <strong>Khẩu độ & ISO:</strong> Ưu tiên ISO gốc kép (<strong class="text-amber-400">ISO 800</strong> cho đủ sáng, <strong class="text-amber-400">ISO 3200</strong> cho hội trường tối). Khẩu mở sâu tùy lens.</li>
-                            <li>• <strong>Picture Profile:</strong> PP3 (Natural) hoặc PP7 (S-Log2 nhẹ nếu hậu kỳ), bật chống rung Active SteadyShot.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Gợi ý Lens thực tế ZV-E10 -->
-                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
-                        <h3 class="text-sm font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                            <span>🔭 CHIẾN LƯỢC DÙNG LENS (ZV-E10)</span>
-                        </h3>
-                        <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
-                            <li>• <strong>Samyang 12mm f/2.0 (Góc siêu rộng):</strong> 
-                                <br><span class="text-slate-400">👉 Dùng để quay toàn cảnh (Wide shot) sân khấu, bao quát khán phòng, góc máy đứng sát bàn mixer/đạo diễn. Chỉnh nét tay (Manual Focus) khoảng vô cực khi quay rộng.</span>
-                            </li>
-                            <li>• <strong>Sony 16-50mm f/3.5-5.6 (Đa dụng):</strong> 
-                                <br><span class="text-slate-400">👉 Dùng làm máy quay chính (Cam A) cận cảnh Caster, panning góc vừa, bật AF-C liên tục, nhận diện khuôn mặt/mắt (Face/Eye AF).</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div id="res-lens-tag" class="text-xs font-bold text-slate-300 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+                    -
                 </div>
             </div>
-        </div>
 
-        <!-- TAB CONTENT: SONY A6000 -->
-        <div id="content-a6000" class="space-y-6 hidden">
-            <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-slate-800">
-                    <div>
-                        <h2 class="text-2xl font-black text-white flex items-center gap-2">
-                            <span>Sony A6000 Setup Profile</span>
-                        </h2>
-                        <p class="text-xs text-slate-400 mt-1">Cấu hình tối ưu chuyên chụp ảnh sự kiện, check-in, merchandise & quay backup.</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="bg-emerald-950 text-emerald-300 border border-emerald-700/50 px-3 py-1 rounded-full text-xs font-bold">Lens: 16-50mm & 50mm f/1.8</span>
-                    </div>
+            <!-- BẢNG THÔNG SỐ CHI TIẾT -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="text-[11px] font-bold text-slate-400 uppercase">Chế độ (Mode)</div>
+                    <div id="val-mode" class="text-base sm:text-lg font-black text-amber-400 mt-1">-</div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Setup Chụp Ảnh -->
-                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
-                        <h3 class="text-sm font-extrabold text-red-500 uppercase tracking-wider flex items-center gap-2">
-                            <span>📸 THÔNG SỐ CHỤP ẢNH SỰ KIỆN (PHOTO)</span>
-                        </h3>
-                        <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
-                            <li>• <strong>Chế độ chụp:</strong> Chế độ <strong>M</strong> (Manual) hoặc <strong>S</strong> (Shutter Priority).</li>
-                            <li>• <strong>Tốc độ màn chập:</strong> Tối thiểu <strong class="text-amber-400">1/160s - 1/250s</strong> để đóng băng chuyển động của game thủ/caster trên sân khấu.</li>
-                            <li>• <strong>Lấy nét:</strong> Chế độ <strong class="text-amber-400">AF-C</strong> (Continuous AF), vùng lấy nét <em>Wide</em> hoặc <em>Zone</em> kết hợp khóa nét mặt.</li>
-                            <li>• <strong>Đo sáng & WB:</strong> Đo sáng điểm (Spot) vào mặt nhân vật, Cân bằng trắng Auto (AWB) hoặc chỉnh K cố định dưới đèn sân khấu.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Gợi ý Lens thực tế A6000 -->
-                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
-                        <h3 class="text-sm font-extrabold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                            <span>🎯 CHIẾN LƯỢC DÙNG LENS (A6000)</span>
-                        </h3>
-                        <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
-                            <li>• <strong>Sony E 50mm f/1.8 OSS (Chân dung thần thánh):</strong> 
-                                <br><span class="text-slate-400">👉 Vũ khí chủ lực chụp chân dung Caster, khách mời, khoảnh khắc trao giải. Khẩu f/1.8 xóa phông mù mịt, tách biệt chủ thể, chụp thiếu sáng cực tốt nhờ có chống rung OSS trên thân lens.</span>
-                            </li>
-                            <li>• <strong>Sony 16-50mm f/3.5-5.6 (Kit dự phòng):</strong> 
-                                <br><span class="text-slate-400">👉 Dùng chụp góc rộng không gian sự kiện, gian hàng merchandise, check-in tổng thể khu vực thi đấu.</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="text-[11px] font-bold text-slate-400 uppercase">Khẩu độ (Aperture)</div>
+                    <div id="val-aperture" class="text-base sm:text-lg font-black text-amber-400 mt-1">-</div>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="text-[11px] font-bold text-slate-400 uppercase">Tốc độ (Shutter Speed)</div>
+                    <div id="val-shutter" class="text-base sm:text-lg font-black text-amber-400 mt-1">-</div>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="text-[11px] font-bold text-slate-400 uppercase">ISO khuyên dùng</div>
+                    <div id="val-iso" class="text-base sm:text-lg font-black text-amber-400 mt-1">-</div>
                 </div>
             </div>
-        </div>
 
-        <!-- TAB CONTENT: GENERAL RULES -->
-        <div id="content-general" class="space-y-6 hidden">
-            <div class="bg-slate-900 border-2 border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
-                <h2 class="text-2xl font-black text-white mb-2">Quy Tắc Vàng Chống Sọc LED & Set Máy On-Site</h2>
-                <p class="text-xs text-slate-400 mb-6">Áp dụng chung cho mọi dòng máy quay/chụp trong môi trường sự kiện chuyên nghiệp.</p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                        <div class="text-red-500 font-black text-base mb-1">01. Khử Sọc Màn Hình LED</div>
-                        <p class="text-xs text-slate-400 leading-relaxed">Luôn tuân thủ nguyên tắc Shutter Speed tương ứng tần số quét đèn LED (thường là bội số của 50 hoặc 60). Tránh để tốc độ lửng lơ gây hiện tượng sọc ngang màn hình.</p>
-                    </div>
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                        <div class="text-amber-400 font-black text-base mb-1">02. Kiểm Soát Ánh Sáng Sân Khấu</div>
-                        <p class="text-xs text-slate-400 leading-relaxed">Đèn sân khấu thường đổi màu liên tục (Đỏ/Xanh dương). Nên set White Balance (K) thủ công thay vì AWB để màu da nhân vật (Caster/MC) không bị ám màu bất thường.</p>
-                    </div>
-                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                        <div class="text-emerald-400 font-black text-base mb-1">03. Pin & Thẻ Nhớ Backup</div>
-                        <p class="text-xs text-slate-400 leading-relaxed">Luôn chuẩn bị sẵn ít nhất 2 viên pin phụ và thẻ nhớ tốc độ cao (V30 trở lên) cho mỗi máy. Kiểm tra định dạng thẻ trước giờ G để tránh mất dữ liệu sự kiện.</p>
-                    </div>
+            <!-- THÔNG TIN PHỤ & CÂN BẮNG TRẮNG -->
+            <div class="bg-slate-950 p-4 sm:p-5 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase">Cân bằng trắng (WB):</span>
+                    <span id="val-wb" class="text-sm font-black text-white ml-2">-</span>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase">Kiểu lấy nét (Focus Mode):</span>
+                    <span id="val-focus" class="text-sm font-black text-teal-400 ml-2">-</span>
                 </div>
             </div>
+
+            <!-- PRO TIPS CHUYÊN SÂU -->
+            <div class="space-y-2">
+                <h4 class="text-xs font-extrabold text-red-500 uppercase tracking-wider flex items-center gap-2">
+                    <span>💡 PRO TIPS THỰC CHIẾN TỪ MANUAL</span>
+                </h4>
+                <div id="val-tips" class="text-xs sm:text-sm text-slate-300 bg-slate-950 p-4 rounded-2xl border border-slate-800 leading-relaxed space-y-2">
+                    <p class="italic text-slate-500">Kết quả phân tích chuyên sâu sẽ hiển thị tại đây...</p>
+                </div>
+            </div>
+
         </div>
 
     </main>
 
     <!-- FOOTER -->
     <footer class="border-t border-slate-800 bg-slate-900 py-6 text-center text-slate-500 text-xs mt-12">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+        <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
             <div class="font-bold text-slate-400">VEDC ENTERPRISE &copy; 2026</div>
-            <div class="text-[11px] text-slate-600">Camera & Lens Advisor Module</div>
+            <div class="text-[11px] text-slate-600">Interactive Advisor Module</div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT TAB SWITCHING -->
+    <!-- JAVASCRIPT LOGIC TƯƠNG TÁC -->
     <script>
-        function switchTab(tabName) {
-            // Ẩn tất cả nội dung
-            document.getElementById('content-zve10').classList.add('hidden');
-            document.getElementById('content-a6000').classList.add('hidden');
-            document.getElementById('content-general').classList.add('hidden');
+        const lensData = {
+            a6000: [
+                { id: 'kit1650', name: 'Kit 16-50mm f/3.5-5.6 OSS (Đa dụng)' },
+                { id: 'fix50', name: 'Sony E 50mm f/1.8 OSS (Chân dung)' }
+            ],
+            zve10: [
+                { id: 'kit1650', name: 'Kit 16-50mm f/3.5-5.6 OSS (Đa dụng / Live)' },
+                { id: 'samyang12', name: 'Samyang 12mm f/2.0 (Góc siêu rộng)' }
+            ]
+        };
 
-            // Reset style tất cả các tab button
-            const tabs = ['zve10', 'a6000', 'general'];
-            tabs.forEach(t => {
-                const btn = document.getElementById('tab-' + t);
-                btn.className = "px-5 py-3 rounded-2xl font-black text-sm transition flex items-center gap-2 bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800 hover:text-white";
+        function updateLensOptions() {
+            const bodySelect = document.getElementById('select-body').value;
+            const lensSelect = document.getElementById('select-lens');
+            lensSelect.innerHTML = '';
+            
+            lensData[bodySelect].forEach(lens => {
+                const opt = document.createElement('option');
+                opt.value = lens.id;
+                opt.innerText = lens.name;
+                lensSelect.appendChild(opt);
             });
+        }
 
-            // Hiển thị tab được chọn và active style
-            document.getElementById('content-' + tabName).classList.remove('hidden');
-            const activeBtn = document.getElementById('tab-' + tabName);
-            activeBtn.className = "px-5 py-3 rounded-2xl font-black text-sm transition flex items-center gap-2 bg-red-600 text-white shadow-lg shadow-red-600/30";
+        // Khởi tạo danh sách lens khi load trang
+        window.onload = function() {
+            updateLensOptions();
+        };
+
+        function generateConfig() {
+            const body = document.getElementById('select-body').value;
+            const lens = document.getElementById('select-lens').value;
+            const env = document.getElementById('select-env').value;
+
+            let res = getRecommendation(body, lens, env);
+
+            document.getElementById('res-badge').innerText = `${res.badge}`;
+            document.getElementById('res-title').innerText = `${res.title}`;
+            document.getElementById('res-lens-tag').innerText = `Thiết bị: ${res.equipment}`;
+            
+            document.getElementById('val-mode').innerText = res.mode;
+            document.getElementById('val-aperture').innerText = res.aperture;
+            document.getElementById('val-shutter').innerText = res.shutter;
+            document.getElementById('val-iso').innerText = res.iso;
+            document.getElementById('val-wb').innerText = res.wb;
+            document.getElementById('val-focus').innerText = res.focus;
+            document.getElementById('val-tips').innerHTML = res.tips;
+        }
+
+        function getRecommendation(body, lens, env) {
+            let bodyName = body === 'a6000' ? 'Sony A6000' : 'Sony ZV-E10';
+            let lensName = document.getElementById('select-lens').selectedOptions[0].text;
+            let equipment = `${bodyName} + ${lensName}`;
+
+            // LOGIC TƯƠNG TÁC TÙY BIẾN
+            if (env === 'stage') {
+                return {
+                    badge: 'Quay/Chụp Sân Khấu Sự Kiện',
+                    title: 'Thiết lập chống sọc LED & Bắt sáng sân khấu',
+                    equipment: equipment,
+                    mode: 'M (Manual)',
+                    aperture: lens === 'fix50' ? 'f/2.2 - f/2.8' : 'f/4.0 - f/5.6',
+                    shutter: '1/60s (Video) / 1/200s (Photo)',
+                    iso: 'ISO 800 - 3200 (Dual Base)',
+                    wb: 'K cố định (4500K - 5500K)',
+                    focus: 'AF-C (Liên tục) + Nhận diện mặt',
+                    tips: `• <strong>Tránh sọc LED:</strong> Tuyệt đối giữ tốc độ màn chập ở 1/50s hoặc 1/60s khi quay video để triệt tiêu hiện tượng sọc quét màn hình LED.<br>• <strong>Xử lý ánh sáng đổi màu:</strong> Đèn sân khấu đổi màu liên tục, hãy set nhiệt độ màu K thủ công (ví dụ 5000K), tránh dùng AWB để mặt nhân vật không bị ám sắc tố lạ.`
+                };
+            } else if (env === 'portrait') {
+                return {
+                    badge: 'Chụp Chân Dung Caster / Model',
+                    title: 'Xóa phông mịt mù, tách biệt chủ thể',
+                    equipment: equipment,
+                    mode: 'A (Aperture Priority) hoặc M',
+                    aperture: lens === 'fix50' ? 'f/1.8 - f/2.2 (Tối ưu)' : 'f/4.0 (Zoom rộng)',
+                    shutter: '1/250s - 1/500s',
+                    iso: 'ISO 100 - 400 (Ngoài trời) / 800 (Trong nhà)',
+                    wb: 'Auto (AWB) hoặc Daylight',
+                    focus: 'AF-C + Eye AF (Ưu tiên lấy nét mắt)',
+                    tips: `• <strong>Tận dụng lens 50mm f/1.8:</strong> Đứng cách mẫu khoảng 2-3m, mở khẩu lớn f/1.8 để background phía sau (đặc biệt là đèn LED hậu cảnh) tạo hiệu ứng bokeh tròn lung linh.<br>• <strong>Góc máy:</strong> Đặt máy ngang tầm mắt nhân vật, tránh ngước từ dưới lên để khung hình tự nhiên nhất.`
+                };
+            } else if (env === 'vlog') {
+                return {
+                    badge: 'Quay Vlog / Review / Hậu Trường',
+                    title: 'Mượt mà, ổn định khung hình & Âm thanh',
+                    equipment: equipment,
+                    mode: 'M (Video Mode)',
+                    aperture: lens === 'samyang12' ? 'f/4.0 - f/5.6' : 'f/3.5 - f/4.0',
+                    shutter: '1/50s (Cố định)',
+                    iso: 'Auto ISO (Giới hạn tối đa 6400)',
+                    wb: 'Auto hoặc Set K theo đèn phòng',
+                    focus: 'AF-S hoặc Face/Eye Tracking',
+                    tips: `• <strong>Chống rung:</strong> Do A6000 không có chống rung IBIS, hãy gắn trên Gimbal hoặc Tripod khi di chuyển. ZV-E10 có thể bật Active SteadyShot.<br>• <strong>Âm thanh:</strong> Luôn kiểm tra mức sóng âm (Audio Level) trước khi bấm quay, cắm tai nghe kiểm âm nếu dùng micro rời.`
+                };
+            } else {
+                return {
+                    badge: 'Không Gian Rộng / Crowd Shot',
+                    title: 'Bao quát toàn cảnh không gian sự kiện',
+                    equipment: equipment,
+                    mode: 'A hoặc M',
+                    aperture: lens === 'samyang12' ? 'f/4.0 - f/8.0 (Nét toàn cảnh)' : 'f/5.6 - f/8.0',
+                    shutter: '1/160s trở lên',
+                    iso: 'ISO 100 - 800',
+                    wb: 'Auto (AWB)',
+                    focus: 'AF-S (Lấy nét đơn điểm vào vùng trung tâm)',
+                    tips: `• <strong>Samyang 12mm f/2.0:</strong> Là "vũ khí tối thượng" khi gắn trên ZV-E10 để quay chụp không gian hẹp, toàn cảnh hội trường hàng ngàn người.<br>• <strong>Lấy nét góc rộng:</strong> Tiêu cự 12mm độ sâu trường ảnh rất dày, khép khẩu f/5.6 là toàn bộ khung hình từ gần đến xa đều nét căng.`
+                };
+            }
         }
     </script>
 </body>
